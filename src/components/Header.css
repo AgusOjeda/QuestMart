@@ -1,0 +1,257 @@
+.header {
+    background-color: #151515;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    position: relative;
+    width: 100%;
+    color: #fff;
+}
+
+.header__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+}
+
+.header__icon {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+    color: #fff;
+}
+
+.header__icon:hover {
+    color: #646cff;
+}
+
+.header__left {
+    display: flex;
+    align-items: center;
+}
+
+
+.header__right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header__search.desktop-only {
+    flex: 1;
+    max-width: 700px;
+    margin: 0 16px;
+    position: relative;
+}
+
+.header__search.desktop-only input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background-color: #1e1e1e;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+.header__search.desktop-only input:focus {
+    border-color: #646cff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.2);
+}
+
+.header__search.desktop-only button {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    font-size: 20px;
+    padding: 5px;
+    z-index: 1;
+}
+
+.header__searchbar {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background-color: #151515;
+    padding: 0 16px;
+}
+
+.header__searchbar.active {
+    max-height: 80px;
+    padding: 12px 16px;
+}
+
+.header__searchbar input {
+    flex: 1; 
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background-color: #1e1e1e;
+    color: #fff;
+    box-sizing: border-box;
+    margin: 0 4px;
+}
+
+.header__searchbar.mobile-only .search-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    font-size: 20px;
+    padding: 5px;
+}
+
+.header__searchbar.mobile-only form {
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+}
+
+.header__menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background-color: #242424;
+    padding: 0 16px;
+    color: #fff;
+}
+
+.header__menu.active {
+    max-height: 200px;
+    padding: 16px;
+}
+
+.header__menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.header__menu li {
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.header__menu li:hover {
+    background-color: #333;
+}
+
+.mobile-only {
+    display: block;
+}
+
+.desktop-only {
+    display: none;
+}
+
+/* Desktop view */
+@media (min-width: 1200px) {
+    .header__top {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 12px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .header__center {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        flex: 1;
+        justify-content: flex-start;
+    }
+
+    .header__right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .header__left {
+        display: none;
+    }
+
+    .header__logo img {
+        height: 60px;
+    }
+
+    .header__icon {
+        font-size: 28px;
+    }
+
+    .header__menu {
+        max-height: none;
+        padding: 12px 32px;
+        background-color: #242424;
+    }
+
+    .header__menu ul {
+        display: flex;
+        gap: 24px;
+        justify-content: center;
+    }
+
+    .header__menu li {
+        border: none;
+        padding: 8px 0;
+    }
+
+    .mobile-only {
+        display: none;
+    }
+
+    .desktop-only {
+        display: block;
+    }
+
+    .header__logo.desktop-only {
+        margin-right: 170px;
+    }
+
+}
+
+/* Input con Label Flotante */
+
+.floating-label-input {
+    position: relative;
+}
+
+.floating-label-input input {
+    padding: 16px 12px 8px;
+    font-size: 16px;
+}
+
+.floating-label-input label {
+    position: absolute;
+    top: 60%;
+    transform: translateY(-80%);
+    left: 12px;
+    color: #aaa;
+    font-size: 16px;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    background-color: #1e1e1e;
+    padding: 0 4px;
+    border-radius: 5px;
+}
+
+.floating-label-input input:focus + label,
+.floating-label-input input.has-content + label {
+    top: 6px;
+    font-size: 12px;
+    color: #646cff;
+}

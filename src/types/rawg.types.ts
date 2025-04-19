@@ -52,3 +52,8 @@ export interface RAWGResponse {
   previous: string | null;
   results: Game[];
 } 
+
+export interface PlatformOption {
+  id: number;
+  name: string;
+}

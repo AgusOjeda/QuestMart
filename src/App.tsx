@@ -1,6 +1,6 @@
-import { SWRConfig } from 'swr';
-import GameApp from './components/GameApp';
-import './App.css';
+import { SWRConfig } from 'swr'
+import AppRouter from './routes/AppRouter.tsx'
+import './App.css'
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         revalidateOnReconnect: true,
       }}
     >
-      <GameApp />
+      <AppRouter />
     </SWRConfig>
   );
 }

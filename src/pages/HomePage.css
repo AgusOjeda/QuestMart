@@ -1,0 +1,18 @@
+/* src/pages/HomePage.css */
+.home {
+  padding: 20px;
+  margin: 0 auto;
+  background-color: #2f2f2f;
+  min-height: 100vh;
+}
+
+.hero {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto 50px;
+}
+
+.categories, .featured, .indie-games {
+  max-width: 1200px;
+  margin: 0 auto 10px;
+}

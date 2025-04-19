@@ -1,0 +1,223 @@
+/* ============================
+   Layout general
+============================ */
+
+.search-page {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #2f2f2f;
+    min-height: 100vh;
+}
+
+.search-page h1 {
+    text-align: center;
+    margin: 1rem 0 2rem;
+    font-size: 1.5rem;
+    color: #f1f1f1;
+}
+
+.search-layout {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+
+@media (min-width: 768px) {
+    .search-page h1 {
+        font-size: 2rem;
+    }
+}
+
+
+@media (min-width: 1200px) {
+    .search-layout {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .sidebars-container {
+        margin-top: 50px; 
+    }
+
+    .search-page h1 {
+        font-size: 3rem;
+        margin-top: 2rem;
+        margin-bottom: 4rem;
+    }
+}
+
+
+/* ============================
+   Filtros / Sidebar
+============================ */
+
+.filter-toggle-btn, .platform-toggle-btn {
+    display: block;
+    margin: 1rem auto;
+    padding: 0.5rem 1rem;
+    background-color: #444;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.platform-toggle-btn:hover, .filter-toggle-btn:hover {
+    background-color: #666;
+}
+
+.genre-sidebar, .platform-sidebar {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 75%;
+    height: 100vh;
+    background-color: #1a1a1a;
+    color: #f1f1f1;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.6);
+    padding: 1rem;
+    z-index: 1000;
+    transition: right 0.3s ease-in-out;
+    overflow-y: auto;
+}
+
+.genre-sidebar.open, .platform-sidebar.open {
+    right: 0;
+}
+
+@media (min-width: 1200px) {
+    .filter-toggle-btn, .platform-toggle-btn {
+        display: none;
+    }
+
+    .genre-sidebar, .platform-sidebar {
+        position: static;
+        width: 220px;
+        height: auto;
+        box-shadow: none;
+        right: auto;
+        transition: none;
+    }
+
+    .genre-sidebar.open, .platform-sidebar.open {
+        right: auto;
+    }
+}
+
+
+/* ============================
+   Contenido principal
+============================ */
+
+.content-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ============================
+   Selector de orden
+============================ */
+
+.sort-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1rem 1rem;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.sort-container label {
+    color: #f1f1f1;
+    font-size: 1rem;
+}
+
+.sort-container select {
+    background-color: #1a1a1a;
+    color: #f1f1f1;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 0.4rem 0.75rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.sort-container select:hover {
+    background-color: #2a2a2a;
+}
+
+@media (min-width: 1200px) {
+    .sort-container {
+        justify-content: flex-end;
+    }
+
+    .sort-container select {
+        margin-right: 4rem; 
+    }
+    
+}
+
+
+/* ============================
+   Tarjetas de juegos
+============================ */
+
+.games-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    padding: 20px;
+    flex: 1;
+}
+
+
+/* ============================
+   Cargar más
+============================ */
+
+.load-more-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.load-more-btn {
+    display: block;
+    margin: 20px auto 0 auto;
+    padding: 0.75rem 1.5rem;
+    background-color: #151515;
+    color: #f1f1f1;
+    font-size: 1rem;
+    border: 1px solid #444;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.load-more-btn:hover {
+    background-color: #1d1d1d;
+}
+
+
+.sort-separator {
+    height: 1px;
+    background-color: #444;
+    width: 90%;
+    margin-left: 1rem;
+}
+
+.search-separator {
+    border: none;
+    height: 2px;
+    background-color: #444; 
+    margin: 0 0 3rem;
+}
