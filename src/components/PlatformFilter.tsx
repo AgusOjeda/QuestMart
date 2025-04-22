@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { usePlatforms } from '../hooks/useGameData';  // Asegúrate de tener el hook de plataformas
-import './PlatformFilter.css';  // Estilos para tu componente (si los tienes)
+import { usePlatforms } from '../hooks/useGameData';  
+import './PlatformFilter.css';  
 
 interface PlatformFilterProps {
   selectedPlatformId: number | null;

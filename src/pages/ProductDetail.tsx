@@ -27,7 +27,7 @@ const ProductDetail = () => {
       <main className="product-detail">
         {loading && <div className="loading">Cargando detalles...</div>}
   
-        {(!loading && (error || !game)) && (
+        {(!loading && (error)) && (
           <div className="error">No se pudo cargar la información del juego.</div>
         )}
   

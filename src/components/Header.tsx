@@ -35,7 +35,7 @@ const Header = () => {
 
                 <div className="header__center">
                     <div className="header__logo desktop-only">
-                        <img src="/play.svg" alt="Logo" />
+                        <img src="/logo.png" alt="Logo" />
                     </div>
 
                     <form className="header__search desktop-only floating-label-input" onSubmit={handleSearch}>
@@ -60,7 +60,7 @@ const Header = () => {
                     <button className="header__icon mobile-only" onClick={() => setShowSearch(prev => !prev)}>
                         <SearchIcon />
                     </button>
-                    <div className="header__icon">
+                    <div className="header__icon cart-icon">
                         <CartIcon />
                     </div>
                 </div>
@@ -90,7 +90,7 @@ const Header = () => {
                         <Link to="/search">Juegos</Link>
                     </li>
                     <li>
-                        Contacto
+                        <Link to="/contact">Contacto</Link>
                     </li>
                 </ul>
             </nav>

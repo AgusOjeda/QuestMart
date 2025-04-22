@@ -1,11 +1,9 @@
-/* ProductDetail.css */
-
 .product-detail {
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
   background-color: #2f2f2f;
-  min-height: 100vh;
+  min-height: 80vh;
 }
 
 .game-header {
@@ -36,7 +34,6 @@
   color: #fff;
 }
 
-/* Layout horizontal en pantallas grandes */
 @media (min-width: 1200px) {
   .game-header {
     flex-direction: row;
@@ -46,7 +43,7 @@
   .game-image-container {
     flex: 3;
     max-width: none;
-    height: 320px; /* Alto aumentado para desktop */
+    height: 320px; 
     overflow: hidden;
   }
 

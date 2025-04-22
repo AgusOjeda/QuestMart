@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import './PromoCarousel.css';
-import bannerJuegos from '../assets/BannerJuegos.jpg';
+import bannerCatalogo from '../assets/BannerCatalogo.png';
 import bannerConsolas from '../assets/BannerConsolas.jpg';
-import bannerProximo from '../assets/BannerProximo.png';
+import bannerProximo from '../assets/BannerProximo.jpg';
 
 const slides = [
   {
-    image: bannerJuegos,
-    text: 'Disfrutá de nuestro catálogo con más de 800.000 juegos',
+    image: bannerCatalogo,
+    text: '',
   },
   {
     image: bannerConsolas,
@@ -15,7 +15,7 @@ const slides = [
   },
   {
     image: bannerProximo,
-    text: '',
+    text: 'Estate atento a futuros lanzamientos',
   },
 ];
 

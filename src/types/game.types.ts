@@ -18,5 +18,5 @@ export interface GameRowProps {
 }
 
 export type Props = {
-  game: GameWithPrices;
-};
+  game: Game;
+}

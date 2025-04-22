@@ -1,4 +1,3 @@
-// src/components/GameCard.tsx
 import { Link } from 'react-router-dom';
 import { Props } from '../types/game.types';
 import './GameCard.css';
@@ -15,9 +14,7 @@ const GameCard = ({ game }: Props) => {
         </Link>
       </h3>
       <p>Rating: {game.rating.toFixed(1)}/5</p>
-      {game.cheapestPrice
-        ? <p>Desde: ${game.cheapestPrice}</p>
-        : <p>Precio no disponible</p>}
+      {game.released && <p>Fecha de Salida: {new Date(game.released).toLocaleDateString()}</p>}
     </div>
   );
 };
