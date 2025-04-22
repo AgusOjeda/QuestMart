@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './PromoCarousel.css';
 import bannerJuegos from '../assets/BannerJuegos.jpg';
 import bannerConsolas from '../assets/BannerConsolas.jpg';
-import bannerProximo from '../assets/BannerProximo.jpg';
+import bannerProximo from '../assets/BannerProximo.png';
 
 const slides = [
   {
@@ -15,7 +15,7 @@ const slides = [
   },
   {
     image: bannerProximo,
-    text: 'Estate atento a futuros lanzamientos',
+    text: '',
   },
 ];
 
