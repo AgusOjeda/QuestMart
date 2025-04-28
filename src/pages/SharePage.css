@@ -1,0 +1,136 @@
+.share-page {
+    background-color: #151515;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 2rem auto;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    min-height: 100vh;
+}
+
+.share-page h2, 
+.share-page h3 {
+    color: #646cff;; 
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.share-page hr {
+    border: none;
+    height: 2px;
+    background-color: #444;
+    margin: 1.5rem 0;
+}
+
+.shared-game-info {
+    text-align: left;
+}
+
+.shared-game-info p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+}
+
+.share-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.share-form label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-align: left; 
+    display: block; 
+    margin-top: 1rem;
+    color: #646cff;;
+}
+
+.share-form input,
+.share-form textarea {
+    width: 95%;
+    padding: 0.8rem;
+    margin-top: 0.3rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #2f2f2f;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.share-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 5rem;
+}
+
+.send-btn {
+    background-color: #055705;
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.cancel-btn {
+    background-color: #661922;
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.send-btn:hover {
+    background-color: #108306;
+}
+
+.cancel-btn:hover {
+    background-color: #d12435;
+}
+
+.error {
+    color: #d12435;
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 1.2rem;
+}
+
+.error-message {
+    color: #d12435;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+}
+
+.error-container {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh; 
+    text-align: center;
+    gap: 10px; 
+}
+
+.error-image {
+    max-width: 100%; 
+    height: auto;
+    max-height: 350px; 
+}
+
+@media (min-width: 768px) {
+    .error-image{
+        max-height: 500px;
+    }
+}

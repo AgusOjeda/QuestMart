@@ -4,12 +4,15 @@ import './ProductDetail.css';
 import { useParams } from 'react-router-dom';
 import { useGameDetails } from '../hooks/useGameData';
 import Footer from '../components/Footer';
+import { useNavigate } from 'react-router-dom';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const gameId = Number(id);
   const { game, loading, error } = useGameDetails(gameId);
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const navigate = useNavigate();
 
   const getDescriptionExcerpt = (description: string, maxWords: number) => {
     const words = description.split(' ');
@@ -26,11 +29,11 @@ const ProductDetail = () => {
       <Header />
       <main className="product-detail">
         {loading && <div className="loading">Cargando detalles...</div>}
-  
+
         {(!loading && (error)) && (
           <div className="error">No se pudo cargar la información del juego.</div>
         )}
-  
+
         {!loading && game && (
           <>
             <section className="game-header">
@@ -44,7 +47,7 @@ const ProductDetail = () => {
                 </div>
               </div>
             </section>
-  
+
             <section className="game-details">
               <div className="description-section">
                 {game.description_raw && (
@@ -63,40 +66,41 @@ const ProductDetail = () => {
                   </div>
                 )}
                 <div className="price-section">
-                  {game.cheapestPrice ? (
-                    <button className="buy-button">
-                      Precio: <strong>${game.cheapestPrice}</strong>
-                    </button>
-                  ) : (
-                    <button className="no-price-button" disabled>
-                      Precio no disponible
-                    </button>
-                  )}
+                  <button className="buy-button">
+                    Precio: <strong>${game.cheapestPrice || "0.00"}</strong>
+                  </button>
+                  <button
+                    className="share-button"
+                    onClick={() => navigate('/share', { state: { game } })}
+                  >
+                    Compartir con un amigo
+                  </button>
                 </div>
+
               </div>
               <div className="details-grid">
                 <div className="info-item">
                   <strong>Géneros:</strong> {game.genres?.map(g => g.name).join(', ')}
                 </div>
-  
+
                 {game.released && (
                   <div className="info-item">
-                    <strong>Lanzamiento:</strong> {game.released}
+                    <strong>Lanzamiento:</strong> {new Date(game.released).toLocaleDateString()}
                   </div>
                 )}
-  
+
                 <div className="info-item">
                   <strong>Metacritic:</strong> {game.metacritic}
                 </div>
-  
+
                 <div className="info-item">
                   <strong>Plataformas:</strong> {game.platforms?.map(p => p.platform.name).join(', ')}
                 </div>
-  
+
                 <div className="info-item">
                   <strong>Desarrolladores:</strong> {game.developers?.map(d => d.name).join(', ')}
                 </div>
-  
+
                 <div className="info-item">
                   <strong>Distribuidores:</strong> {game.publishers?.map(p => p.name).join(', ')}
                 </div>

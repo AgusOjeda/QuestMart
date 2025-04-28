@@ -7,7 +7,7 @@ import { PlatformOption } from '../types/rawg.types';
 
 const swrConfig: SWRConfiguration = {
   revalidateOnFocus: false,
-  revalidateOnReconnect: true,
+  revalidateOnReconnect: false,
   refreshInterval: 0,
   shouldRetryOnError: true,
   dedupingInterval: 2000,

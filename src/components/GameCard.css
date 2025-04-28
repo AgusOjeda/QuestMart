@@ -9,12 +9,12 @@
     max-width: 300px;
     box-sizing: border-box;
     text-align: center;
-    color: #f1f1f1;
+    color: #fff;
     transition: all 0.2s ease-in-out;
 }
 
 .game-card:hover {
-    background-color: #1d1d1d;
+    background-color: #151515;
     transform: scale(1.05);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
@@ -22,13 +22,13 @@
 .game-card h3 {
     margin: 0.5rem 0;
     font-size: 1.1rem;
-    color: #f1f1f1;
+    color: #fff;
 }
 
 .game-card p {
     margin: 0.25rem 0;
     font-size: 0.95rem;
-    color: #ccc;
+    color: #bbb;
 }
 
 .game-image {
@@ -40,7 +40,7 @@
 }
 
 .game-name-link {
-    color: #f1f1f1; 
+    color: #fff; 
     text-decoration: none;
     font-size: 1.1rem;
     transition: color 0.2s ease, transform 0.2s ease;

@@ -3,14 +3,14 @@
   max-width: 1200px;
   margin: 0 auto;
   background-color: #2f2f2f;
-  min-height: 80vh;
+  min-height: 100vh;
 }
 
 .game-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #242424;
+  background-color: #151515;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -95,7 +95,7 @@
 .price-section {
   flex: 1;
   min-width: 220px;
-  background-color: #3b3b3b;
+  background-color: #242424;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -106,8 +106,8 @@
 }
 
 .buy-button {
-  background-color: rgb(5, 87, 5);
-  color: white;
+  background-color: #055705;
+  color: #fff;
   padding: 12px 20px;
   border: none;
   border-radius: 8px;
@@ -117,28 +117,25 @@
   transition: background 0.3s;
 }
 
-.buy-button:hover {
+.buy-button:hover, .share-button:hover {
   background-color: #108306;
 }
 
-.no-price-button {
-  background-color: #c04848;
-  color: #bbb;
+.share-button {
+  background-color: #055705;
+  color: #fff;
   padding: 12px 20px;
+  margin-top: 12px;
   border: none;
   border-radius: 8px;
   font-size: 1.1rem;
+  cursor: pointer;
   font-weight: bold;
-  cursor: default;
+  transition: background 0.3s;
 }
-
-.no-price-button:disabled {
-  background-color: #c04848;
-}
-
 /* --- Cards generales --- */
 .info-item {
-  background-color: #3b3b3b;
+  background-color: #242424;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

@@ -1,20 +1,20 @@
-/* ============================
+/* 
    Layout general
-============================ */
+*/
 
 .search-page {
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
     background-color: #2f2f2f;
-    min-height: 80vh;
+    min-height: 100vh;
 }
 
 .search-page h1 {
     text-align: center;
     margin: 1rem 0 2rem;
     font-size: 1.5rem;
-    color: #f1f1f1;
+    color: #fff;
 }
 
 .search-layout {
@@ -49,9 +49,9 @@
 }
 
 
-/* ============================
+/* 
    Filtros / Sidebar
-============================ */
+*/
 
 .filter-toggle-btn, .platform-toggle-btn {
     display: block;
@@ -76,8 +76,8 @@
     right: -100%;
     width: 75%;
     height: 100vh;
-    background-color: #1a1a1a;
-    color: #f1f1f1;
+    background-color: #151515;
+    color: #fff;
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.6);
     padding: 1rem;
     z-index: 1000;
@@ -109,9 +109,9 @@
 }
 
 
-/* ============================
+/* 
    Contenido principal
-============================ */
+*/
 
 .content-container {
     flex: 1;
@@ -120,9 +120,9 @@
 }
 
 
-/* ============================
+/* 
    Selector de orden
-============================ */
+*/
 
 .sort-container {
     display: flex;
@@ -134,13 +134,13 @@
 }
 
 .sort-container label {
-    color: #f1f1f1;
+    color: #fff;
     font-size: 1rem;
 }
 
 .sort-container select {
-    background-color: #1a1a1a;
-    color: #f1f1f1;
+    background-color: #151515;
+    color: #fff;
     border: 1px solid #444;
     border-radius: 5px;
     padding: 0.4rem 0.75rem;
@@ -150,7 +150,7 @@
 }
 
 .sort-container select:hover {
-    background-color: #2a2a2a;
+    background-color: #242424;
 }
 
 @media (min-width: 1200px) {
@@ -179,9 +179,9 @@
 }
 
 
-/* ============================
+/* 
    Cargar más
-============================ */
+ */
 
 .load-more-container {
     width: 100%;
@@ -195,7 +195,7 @@
     margin: 20px auto 0 auto;
     padding: 0.75rem 1.5rem;
     background-color: #151515;
-    color: #f1f1f1;
+    color: #fff;
     font-size: 1rem;
     border: 1px solid #444;
     border-radius: 5px;
@@ -204,7 +204,7 @@
 }
 
 .load-more-btn:hover {
-    background-color: #1d1d1d;
+    background-color: #242424;
 }
 
 
