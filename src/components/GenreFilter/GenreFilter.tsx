@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useGenres } from '../hooks/useGameData'; 
+import { useGenres } from '../../hooks/useGameData'; 
 import './GenreFilter.css'; 
 
 interface GenreFilterProps {

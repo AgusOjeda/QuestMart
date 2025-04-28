@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { useGameSearchWithFilters } from '../hooks/useGameData'
-import Header from '../components/Header'
-import GenreFilter from '../components/GenreFilter.tsx'
+import { useGameSearchWithFilters } from '../../hooks/useGameData.ts'
+import Header from '../../components/Header/Header.tsx'
+import GenreFilter from '../../components/GenreFilter/GenreFilter.tsx'
 import './SearchPage.css'
-import { GameWithPrices } from '../types/game.types.ts'
-import useDebounce from '../hooks/useDebounce'
-import PlatformFilter from '../components/PlatformFilter.tsx'
-import Footer from '../components/Footer.tsx'
-import GameCard from '../components/GameCard';
+import { GameWithPrices } from '../../types/game.types.ts'
+import useDebounce from '../../hooks/useDebounce.ts'
+import PlatformFilter from '../../components/PlatformFilter/PlatformFilter.tsx'
+import Footer from '../../components/Footer/Footer.tsx'
+import GameCard from '../../components/GameCard/GameCard.tsx'
 
 
 
@@ -183,7 +183,6 @@ const SearchPage: React.FC = () => {
                                 onGenreSelect={handleGenreSelect}
                             />
                         </aside>
-
                         <aside
                             className={`platform-sidebar ${showPlatformMobile ? 'open' : ''}`}
                             ref={platformSidebarRef}
@@ -194,7 +193,6 @@ const SearchPage: React.FC = () => {
                             />
                         </aside>
                     </div>
-
                     <div className="content-container">
                         <div className="sort-container">
                             <label htmlFor="sortOrder">Ordenar por calificación:</label>
@@ -213,9 +211,7 @@ const SearchPage: React.FC = () => {
                                 <option value="worst">Peor calificación</option>
                             </select>
                         </div>
-
                         <div className="sort-separator" />
-
                         <div className="games-container">
                             {loading && allGames.length === 0 && <div>Buscando juegos...</div>}
                             {error && <div>Error: {error.message}</div>}
@@ -223,8 +219,6 @@ const SearchPage: React.FC = () => {
                             {allGames.map((game) => (
                                 <GameCard key={game.id} game={game} />
                             ))}
-
-
                             {!loading && allGames.length > 0 && hasMore && (
                                 <div className="load-more-container">
                                     <button onClick={loadMore} className="load-more-btn">

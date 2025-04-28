@@ -1,6 +1,6 @@
 import React from 'react';
 import './SuccessAlert.css';
-import { SuccessAlertProps } from '../types/util.types';
+import { SuccessAlertProps } from '../../types/util.types';
 
 const SuccessAlert: React.FC<SuccessAlertProps> = ({ message, onClose }) => {
     return (
@@ -8,7 +8,7 @@ const SuccessAlert: React.FC<SuccessAlertProps> = ({ message, onClose }) => {
             <div className="success-alert" onClick={(e) => e.stopPropagation()}>
                 <h2>{message}</h2>
                 <hr />
-                <button onClick={onClose}>OK</button>
+                <button onClick={onClose}>Aceptar</button>
             </div>
         </div>
     );

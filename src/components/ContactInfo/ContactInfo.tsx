@@ -1,5 +1,5 @@
 import './ContactInfo.css';
-import { MailIcon, ClockIcon, MapPinIcon, WhatsAppIcon } from './icons.tsx'; 
+import { MailIcon, ClockIcon, MapPinIcon, WhatsAppIcon } from '../icons.tsx'; 
 
 const ContactInfo = () => {
     return (

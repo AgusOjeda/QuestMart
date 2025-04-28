@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import HomePage from '../pages/HomePage.tsx'
-import SearchPage from '../pages/SearchPage.tsx'
-import ProductDetail from '../pages/ProductDetail.tsx';
-import ContactPage from '../pages/ContactPage.tsx';
-import SharePage from '../pages/SharePage.tsx';
+import HomePage from '../pages/Home/HomePage.tsx'
+import SearchPage from '../pages/Search/SearchPage.tsx'
+import ProductDetail from '../pages/Detail/ProductDetail.tsx';
+import ContactPage from '../pages/Contact/ContactPage.tsx';
+import SharePage from '../pages/Share/SharePage.tsx';
 
 import CartPage from '../pages/cart/CartPage.tsx';
 import HistoryPage from '../pages/History/HistoryPage.tsx';

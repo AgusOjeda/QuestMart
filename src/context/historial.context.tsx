@@ -1,12 +1,10 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { Game } from '../types/rawg.types';
 
-
-
 interface HistoryContextType {
     history: Game[];
     addToHistory: (item: Game) => void;
-    removeFromHistory: (id: string) => void;
+    removeFromHistory: (id: number) => void;
     clearHistory: () => void;
 }
 
@@ -24,21 +22,18 @@ export const HistoryProvider = ({ children }: { children: React.ReactNode }) => 
 
     const addToHistory = (item: Game) => {
         setHistory(prev => {
-            const existing = prev.find(x => x.id === item.id);
-            if (existing) {
-                return prev.map(x =>
-                    x.id === item.id ? { ...x} : x
-                );
-            }
-            return [...prev, item];
+            const filtered = prev.filter(x => x.id !== item.id);
+            return [item, ...filtered];
         });
     };
 
-    const removeFromHistory = (id: string) => {
-        setHistory(prev => prev.filter(x => x.id !== Number(id)));
+    const removeFromHistory = (id: number) => {
+        setHistory(prev => prev.filter(x => x.id !== id));
     };
 
-    const clearHistory = () => setHistory([]);
+    const clearHistory = () => {
+        setHistory([]);
+    };
 
     return (
         <HistoryContext.Provider value={{ history, addToHistory, removeFromHistory, clearHistory }}>

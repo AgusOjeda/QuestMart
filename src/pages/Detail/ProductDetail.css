@@ -3,7 +3,7 @@
   max-width: 1200px;
   margin: 0 auto;
   background-color: #2f2f2f;
-  min-height: 100vh;
+  min-height: 92vh;
 }
 
 .game-header {
@@ -78,7 +78,7 @@
   gap: 20px;
 }
 
-/* --- Descripción + Precio lado a lado --- */
+/* Descripción + Precio lado a lado  */
 .description-section {
   display: flex;
   flex-wrap: wrap;
@@ -133,7 +133,7 @@
   font-weight: bold;
   transition: background 0.3s;
 }
-/* --- Cards generales --- */
+/*  Cards generales */
 .info-item {
   background-color: #242424;
   padding: 20px;
@@ -153,7 +153,7 @@
   margin: 0;
 }
 
-/* --- Grilla de 3 columnas --- */
+/* Grilla de 3 columnas*/
 .details-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

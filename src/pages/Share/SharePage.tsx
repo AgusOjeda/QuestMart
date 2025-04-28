@@ -1,11 +1,11 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import './SharePage.css';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import SuccessAlert from '../components/SuccessAlert';
-import ConfirmAlert from '../components/ConfirmAlert';
-import error from '../assets/error.png';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
+import SuccessAlert from '../../components/Alerts/SuccessAlert';
+import ConfirmAlert from '../../components/Alerts/ConfirmAlert';
+import error from '../../assets/error.png';
 
 const SharePage = () => {
     const location = useLocation();

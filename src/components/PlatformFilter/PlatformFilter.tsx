@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { usePlatforms } from '../hooks/useGameData';  
+import { usePlatforms } from '../../hooks/useGameData';  
 import './PlatformFilter.css';  
 
 interface PlatformFilterProps {

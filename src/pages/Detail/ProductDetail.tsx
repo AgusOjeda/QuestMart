@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import Header from '../components/Header';
+import Header from '../../components/Header/Header';
 import './ProductDetail.css';
-import { useParams } from 'react-router-dom';
-import { useGameDetails } from '../hooks/useGameData';
-import Footer from '../components/Footer';
-import { useCart } from '../context/cart.context'; 
-import { CartItem } from '../context/cart.context';
-import { useHistory } from '../context/historial.context';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useGameDetails } from '../../hooks/useGameData';
+import Footer from '../../components/Footer/Footer';
+import { useCart } from '../../context/cart.context';
+import { CartItem } from '../../context/cart.context';
+import { useHistory } from '../../context/historial.context';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -15,6 +15,7 @@ const ProductDetail = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const { addToCart } = useCart();
   const { addToHistory } = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (game) {
@@ -22,8 +23,7 @@ const ProductDetail = () => {
     }
   }, [game]);
 
-
-const getDescriptionExcerpt = (description: string, maxWords: number) => {
+  const getDescriptionExcerpt = (description: string, maxWords: number) => {
     const words = description.split(' ');
     if (words.length <= maxWords) return description;
     return words.slice(0, maxWords).join(' ') + '...';
@@ -34,12 +34,13 @@ const getDescriptionExcerpt = (description: string, maxWords: number) => {
   };
 
   const handleAddToCart = () => {
-    if (game && game.cheapestPrice) {
+    if (game) {
+      const price = game.cheapestPrice != null ? game.cheapestPrice : 0.00;
       const itemToAdd: CartItem = {
         id: String(game.id),
         name: game.name,
         quantity: 1,
-        price: Number(game.cheapestPrice),
+        price: Number(price),
         imageUrl: game.background_image,
       };
       addToCart(itemToAdd);
@@ -71,10 +72,9 @@ const getDescriptionExcerpt = (description: string, maxWords: number) => {
                 </div>
               </div>
             </section>
-
             <section className="game-details">
               <div className="description-section">
-                 {game.description_raw && (
+                {game.description_raw && (
                   <div className="info-item description">
                     <strong>Descripción:</strong>
                     <p>
@@ -90,40 +90,35 @@ const getDescriptionExcerpt = (description: string, maxWords: number) => {
                   </div>
                 )}
                 <div className="price-section">
-                  {game.cheapestPrice ? (
-                    <button className="buy-button" onClick={handleAddToCart}>
-                      Agregar al Carrito (${game.cheapestPrice})
-                    </button>
-                  ) : (
-                    <button className="no-price-button" disabled>
-                      Precio no disponible
-                    </button>
-                  )}
+                  <button className="buy-button" onClick={handleAddToCart}>
+                    Agregar al Carrito (${game.cheapestPrice || '0.00'})
+                  </button>
+                  <button
+                    className="share-button"
+                    onClick={() => navigate('/share', { state: { game } })}
+                  >
+                    Compartir con un amigo
+                  </button>
                 </div>
               </div>
               <div className="details-grid">
                 <div className="info-item">
                   <strong>Géneros:</strong> {game.genres?.map(g => g.name).join(', ')}
                 </div>
-
                 {game.released && (
                   <div className="info-item">
-                    <strong>Lanzamiento:</strong> {game.released}
+                    <strong>Lanzamiento:</strong> {new Date(game.released).toLocaleDateString()}
                   </div>
                 )}
-
                 <div className="info-item">
                   <strong>Metacritic:</strong> {game.metacritic}
                 </div>
-
                 <div className="info-item">
                   <strong>Plataformas:</strong> {game.platforms?.map(p => p.platform.name).join(', ')}
                 </div>
-
                 <div className="info-item">
                   <strong>Desarrolladores:</strong> {game.developers?.map(d => d.name).join(', ')}
                 </div>
-
                 <div className="info-item">
                   <strong>Distribuidores:</strong> {game.publishers?.map(p => p.name).join(', ')}
                 </div>

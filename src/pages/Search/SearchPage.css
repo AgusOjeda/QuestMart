@@ -30,7 +30,6 @@
     }
 }
 
-
 @media (min-width: 1200px) {
     .search-layout {
         flex-direction: row;
@@ -165,9 +164,9 @@
 }
 
 
-/* ============================
+/* 
    Tarjetas de juegos
-============================ */
+*/
 
 .games-container {
     display: flex;

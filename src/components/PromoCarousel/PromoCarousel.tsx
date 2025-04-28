@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import './PromoCarousel.css';
-import bannerCatalogo from '../assets/BannerCatalogo.png';
-import bannerConsolas from '../assets/BannerConsolas.jpg';
-import bannerProximo from '../assets/BannerProximo.jpg';
+import bannerCatalogo from '../../assets/BannerCatalogo.png';
+import bannerConsolas from '../../assets/BannerConsolas.jpg';
+import bannerProximo from '../../assets/BannerProximo.jpg';
 
 const slides = [
   {

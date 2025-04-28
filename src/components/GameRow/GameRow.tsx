@@ -1,8 +1,8 @@
 import React from 'react';
-import { useGameSearchWithFilters } from '../hooks/useGameData'; 
-import GameCard from './GameCard';
+import { useGameSearchWithFilters } from '../../hooks/useGameData'; 
+import GameCard from '../GameCard/GameCard';
 import './GameRow.css'
-import { GameRowProps } from '../types/game.types';
+import { GameRowProps } from '../../types/game.types';
 
 const GameRow: React.FC<GameRowProps> = ({ title, genreId, platformId, sortOrder }) => {
   const { games, loading, error } = useGameSearchWithFilters(

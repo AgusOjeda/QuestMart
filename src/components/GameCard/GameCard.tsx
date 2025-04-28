@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Props } from '../types/game.types';
+import { Props } from '../../types/game.types';
 import './GameCard.css';
 
 

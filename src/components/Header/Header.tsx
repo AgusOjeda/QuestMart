@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
-import { CartIcon, SearchIcon, MenuIcon, CloseIcon, TrashIcon } from './icons.tsx'; // Asumiendo que tienes o creas un CloseIcon
+import { CartIcon, SearchIcon, MenuIcon, CloseIcon, TrashIcon } from '../icons.tsx';
 import './Header.css';
-import { useCart } from '../context/cart.context'; // Asegúrate que la ruta sea correcta
+import { useCart } from '../../context/cart.context.tsx';
 
 const Header = () => {
     const [showMenu, setShowMenu] = useState(false);
@@ -11,65 +11,56 @@ const Header = () => {
     const [search, setSearch] = useState('');
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const { cart, removeFromCart } = useCart(); // Añadimos removeFromCart si quieres un botón de eliminar en el minicart
+    const { cart, removeFromCart } = useCart();
 
-    // Se sicroniza el valor de la busqueda con la URL
     useEffect(() => {
         const query = searchParams.get('q');
         if (query) {
             setSearch(query);
         } else {
-            setSearch(''); // Limpia si no hay query 'q'
+            setSearch('');
         }
     }, [searchParams]);
 
-     // Cierra menú/búsqueda/carrito si se navega a otra página (opcional pero buena UX)
+    // Cierra menú/búsqueda/carrito si se navega a otra página (opcional pero buena UX)
     useEffect(() => {
-      const handleRouteChange = () => {
-        setShowMenu(false);
-        setShowSearch(false);
-        setShowMiniCart(false);
-      };
-      // Esto requiere que uses un listener de historial o similar si usas react-router v6+
-      // Más simple: simplemente cierra al hacer clic en enlaces del menú/carrito
-      // Lo dejamos así por ahora, cerrando explícitamente con onClick en los Links
-      return () => {
-        // Cleanup listener if implemented
-      };
+        const handleRouteChange = () => {
+            setShowMenu(false);
+            setShowSearch(false);
+            setShowMiniCart(false);
+        };
+
+        return () => {
+        };
     }, []);
 
 
-    // Evita scroll del body cuando el minicart está abierto
     useEffect(() => {
-      if (showMiniCart) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = '';
-      }
-      // Cleanup al desmontar componente
-      return () => {
-        document.body.style.overflow = '';
-      };
+        if (showMiniCart) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
     }, [showMiniCart]);
-
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
         if (search.trim()) {
             navigate(`/search?q=${encodeURIComponent(search.trim())}`);
-            setShowSearch(false); // Cierra la barra de búsqueda móvil
+            setShowSearch(false);
         }
     };
 
     const handleToggleMiniCart = (e: React.MouseEvent) => {
-      e.stopPropagation(); // Evita que el click se propague al overlay si se hace click directo en el icono
-      setShowMiniCart(prev => !prev);
+        e.stopPropagation();
+        setShowMiniCart(prev => !prev);
     }
 
-    // Calcular subtotal
     const cartSubtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
     const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-
 
     return (
         <>
@@ -82,23 +73,20 @@ const Header = () => {
                     </div>
 
                     <div className="header__center">
-                         {/* Logo ahora visible en móvil también, centrado */}
-                         <Link to="/" className="header__logo" onClick={() => { setShowMenu(false); setShowSearch(false); }}>
-                             <img src="/logo.png" alt="Logo" />
-                         </Link>
+                        <Link to="/" className="header__logo" onClick={() => { setShowMenu(false); setShowSearch(false); }}>
+                            <img src="/logo.png" alt="Logo" />
+                        </Link>
 
-                        {/* Búsqueda Desktop */}
                         <form className="header__search desktop-only floating-label-input" onSubmit={handleSearch}>
-                            {/* ... (input y label sin cambios) ... */}
-                             <input
-                                 type="text"
-                                 id="desktop-search"
-                                 value={search}
-                                 onChange={(e) => setSearch(e.target.value)}
-                                 className={search ? 'has-content' : ''}
-                                 aria-label="Buscar juegos en escritorio"
-                             />
-                             <label htmlFor="desktop-search">Buscar juegos</label>
+                            <input
+                                type="text"
+                                id="desktop-search"
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                className={search ? 'has-content' : ''}
+                                aria-label="Buscar juegos en escritorio"
+                            />
+                            <label htmlFor="desktop-search">Buscar juegos</label>
                             <button type="submit" className="header__icon desktop-only" aria-label="Buscar">
                                 <SearchIcon />
                             </button>
@@ -143,15 +131,14 @@ const Header = () => {
                             <Link to="/search" onClick={() => setShowMenu(false)}>Juegos</Link>
                         </li>
                         <li>
-                            <Link to="/contact" onClick={() => setShowMenu(false)}>Contacto</Link>
+                            <Link to="/historial" onClick={() => setShowMenu(false)}>Historial</Link>
                         </li>
                         <li>
-                            <Link to="/historial" onClick={() => setShowMenu(false)}>Historial</Link>
+                            <Link to="/contact" onClick={() => setShowMenu(false)}>Contacto</Link>
                         </li>
                     </ul>
                 </nav>
             </header>
-
             <div
                 className={`mini-cart-overlay ${showMiniCart ? 'active' : ''}`}
                 onClick={() => setShowMiniCart(false)}
@@ -163,7 +150,7 @@ const Header = () => {
                     role="dialog"
                     aria-modal="true"
                     aria-labelledby="mini-cart-title"
-                 >
+                >
                     <div className="mini-cart__header">
                         <h2 id="mini-cart-title">Tu carrito</h2>
                         <button
@@ -171,7 +158,7 @@ const Header = () => {
                             onClick={() => setShowMiniCart(false)}
                             aria-label="Cerrar carrito"
                         >
-                           <CloseIcon />
+                            <CloseIcon />
                         </button>
                     </div>
 
@@ -185,7 +172,7 @@ const Header = () => {
                                         <img src={item.imageUrl} alt={item.name} className="mini-cart__item-image" />
                                         <div className="mini-cart__item-details">
                                             <Link to={`/product/${item.id}`} className="mini-cart__item-name">
-                                            {item.name}
+                                                {item.name}
                                             </Link>
                                             <span className="mini-cart__item-meta">
                                                 {item.quantity} × ${item.price.toFixed(2)}
@@ -204,13 +191,13 @@ const Header = () => {
                     )}
 
                     {cart.length > 0 && (
-                      <Link
-                          to="/carrito" 
-                          className="view-cart-button"
-                          onClick={() => setShowMiniCart(false)}
-                      >
-                          Ver carrito completo
-                      </Link>
+                        <Link
+                            to="/carrito"
+                            className="view-cart-button"
+                            onClick={() => setShowMiniCart(false)}
+                        >
+                            Ver carrito completo
+                        </Link>
                     )}
                 </div>
             </div>

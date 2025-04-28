@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import Header from '../components/Header';
-import PromoCarousel from '../components/PromoCarousel';
-import GameRow from '../components/GameRow';
+import Header from '../../components/Header/Header';
+import PromoCarousel from '../../components/PromoCarousel/PromoCarousel';
+import GameRow from '../../components/GameRow/GameRow';
 import './HomePage.css';
-import Footer from '../components/Footer';
-import { useGenres } from '../hooks/useGameData'; 
+import Footer from '../../components/Footer/Footer';
+import { useGenres } from '../../hooks/useGameData'; 
 
 const HomePage = () => {
   const [indieGenreId, setIndieGenreId] = useState<number | null>(null);

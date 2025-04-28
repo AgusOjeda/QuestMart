@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { LatLngExpression } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './ContactMap.css';
-import { useFitMapToMarkers } from '../hooks/useFitMapToMarkers';
+import { useFitMapToMarkers } from '../../hooks/useFitMapToMarkers';
 
 const defaultPosition: LatLngExpression = [-34.9214, -57.9544];
 

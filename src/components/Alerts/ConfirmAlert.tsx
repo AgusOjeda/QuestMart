@@ -1,6 +1,6 @@
 import React from 'react';
 import './ConfirmAlert.css';
-import { ConfirmAlertProps } from '../types/util.types';
+import { ConfirmAlertProps } from '../../types/util.types';
 
 const ConfirmAlert: React.FC<ConfirmAlertProps> = ({ message, onConfirm, onCancel }) => {
     return (
