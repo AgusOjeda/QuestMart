@@ -1,101 +1,224 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
-import { CartIcon, SearchIcon, MenuIcon } from './icons.tsx';
+import { CartIcon, SearchIcon, MenuIcon, CloseIcon, TrashIcon } from './icons.tsx'; // Asumiendo que tienes o creas un CloseIcon
 import './Header.css';
+import { useCart } from '../context/cart.context'; // Asegúrate que la ruta sea correcta
 
 const Header = () => {
     const [showMenu, setShowMenu] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
+    const [showMiniCart, setShowMiniCart] = useState(false);
     const [search, setSearch] = useState('');
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
+    const { cart, removeFromCart } = useCart(); // Añadimos removeFromCart si quieres un botón de eliminar en el minicart
 
-    // Se sicroniza el valor de la busqueda con la URL en caso de regresar de pagina
+    // Se sicroniza el valor de la busqueda con la URL
     useEffect(() => {
         const query = searchParams.get('q');
         if (query) {
             setSearch(query);
+        } else {
+            setSearch(''); // Limpia si no hay query 'q'
         }
     }, [searchParams]);
 
+     // Cierra menú/búsqueda/carrito si se navega a otra página (opcional pero buena UX)
+    useEffect(() => {
+      const handleRouteChange = () => {
+        setShowMenu(false);
+        setShowSearch(false);
+        setShowMiniCart(false);
+      };
+      // Esto requiere que uses un listener de historial o similar si usas react-router v6+
+      // Más simple: simplemente cierra al hacer clic en enlaces del menú/carrito
+      // Lo dejamos así por ahora, cerrando explícitamente con onClick en los Links
+      return () => {
+        // Cleanup listener if implemented
+      };
+    }, []);
+
+
+    // Evita scroll del body cuando el minicart está abierto
+    useEffect(() => {
+      if (showMiniCart) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+      // Cleanup al desmontar componente
+      return () => {
+        document.body.style.overflow = '';
+      };
+    }, [showMiniCart]);
+
+
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
-        navigate(`/search?q=${encodeURIComponent(search.trim())}`);
-        setShowSearch(false);
+        if (search.trim()) {
+            navigate(`/search?q=${encodeURIComponent(search.trim())}`);
+            setShowSearch(false); // Cierra la barra de búsqueda móvil
+        }
     };
 
-    return (
-        <header className="header">
-            <div className="header__top">
-                <div className="header__left mobile-only">
-                    <button className="header__icon" onClick={() => setShowMenu(prev => !prev)}>
-                        <MenuIcon />
-                    </button>
-                </div>
+    const handleToggleMiniCart = (e: React.MouseEvent) => {
+      e.stopPropagation(); // Evita que el click se propague al overlay si se hace click directo en el icono
+      setShowMiniCart(prev => !prev);
+    }
 
-                <div className="header__center">
-                    <div className="header__logo desktop-only">
-                        <img src="/logo.png" alt="Logo" />
+    // Calcular subtotal
+    const cartSubtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+
+
+    return (
+        <>
+            <header className="header">
+                <div className="header__top">
+                    <div className="header__left mobile-only">
+                        <button className="header__icon" onClick={() => setShowMenu(prev => !prev)} aria-label="Abrir menú">
+                            <MenuIcon />
+                        </button>
                     </div>
 
-                    <form className="header__search desktop-only floating-label-input" onSubmit={handleSearch}>
+                    <div className="header__center">
+                         {/* Logo ahora visible en móvil también, centrado */}
+                         <Link to="/" className="header__logo" onClick={() => { setShowMenu(false); setShowSearch(false); }}>
+                             <img src="/logo.png" alt="Logo" />
+                         </Link>
+
+                        {/* Búsqueda Desktop */}
+                        <form className="header__search desktop-only floating-label-input" onSubmit={handleSearch}>
+                            {/* ... (input y label sin cambios) ... */}
+                             <input
+                                 type="text"
+                                 id="desktop-search"
+                                 value={search}
+                                 onChange={(e) => setSearch(e.target.value)}
+                                 className={search ? 'has-content' : ''}
+                                 aria-label="Buscar juegos en escritorio"
+                             />
+                             <label htmlFor="desktop-search">Buscar juegos</label>
+                            <button type="submit" className="header__icon desktop-only" aria-label="Buscar">
+                                <SearchIcon />
+                            </button>
+                        </form>
+                    </div>
+
+                    <div className="header__right">
+                        <button className="header__icon mobile-only" onClick={() => setShowSearch(prev => !prev)} aria-label="Abrir búsqueda">
+                            <SearchIcon />
+                        </button>
+                        <button className="header__icon cart-icon" onClick={handleToggleMiniCart} aria-label={`Carrito (${totalItems} items)`}>
+                            <CartIcon />
+                            {totalItems > 0 && (
+                                <span className="cart-count">{totalItems}</span>
+                            )}
+                        </button>
+                    </div>
+                </div>
+
+                {/* Búsqueda Móvil */}
+                <div className={`header__searchbar mobile-only ${showSearch ? 'active' : ''}`}>
+                    <form onSubmit={handleSearch}>
                         <input
                             type="text"
-                            id="desktop-search"
+                            placeholder="Buscar juegos..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className={search ? 'has-content' : ''}
+                            aria-label="Buscar juegos en móvil"
                         />
-                        <label htmlFor="desktop-search">Buscar juegos</label>
-                        <button
-                            type="submit"
-                            className="header__icon desktop-only"
-                        >
+                        <button type="submit" className="search-button" aria-label="Buscar">
                             <SearchIcon />
                         </button>
                     </form>
+                </div>
 
-                </div>
-                <div className="header__right">
-                    <button className="header__icon mobile-only" onClick={() => setShowSearch(prev => !prev)}>
-                        <SearchIcon />
-                    </button>
-                    <div className="header__icon cart-icon">
-                        <CartIcon />
+                <nav className={`header__menu ${showMenu ? 'active' : ''}`}>
+                    <ul>
+                        <li>
+                            <Link to="/" onClick={() => setShowMenu(false)}>Inicio</Link>
+                        </li>
+                        <li>
+                            <Link to="/search" onClick={() => setShowMenu(false)}>Juegos</Link>
+                        </li>
+                        <li>
+                            <Link to="/contact" onClick={() => setShowMenu(false)}>Contacto</Link>
+                        </li>
+                        <li>
+                            <Link to="/historial" onClick={() => setShowMenu(false)}>Historial</Link>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+
+            <div
+                className={`mini-cart-overlay ${showMiniCart ? 'active' : ''}`}
+                onClick={() => setShowMiniCart(false)}
+                aria-hidden={!showMiniCart}
+            >
+                <div
+                    className="mini-cart"
+                    onClick={(e) => e.stopPropagation()}
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="mini-cart-title"
+                 >
+                    <div className="mini-cart__header">
+                        <h2 id="mini-cart-title">Tu carrito</h2>
+                        <button
+                            className="mini-cart__close-btn"
+                            onClick={() => setShowMiniCart(false)}
+                            aria-label="Cerrar carrito"
+                        >
+                           <CloseIcon />
+                        </button>
                     </div>
+
+                    {cart.length === 0 ? (
+                        <p className="mini-cart__empty-message">El carrito está vacío.</p>
+                    ) : (
+                        <>
+                            <ul className="mini-cart__list">
+                                {cart.map((item) => (
+                                    <li key={item.id} className="mini-cart__item">
+                                        <img src={item.imageUrl} alt={item.name} className="mini-cart__item-image" />
+                                        <div className="mini-cart__item-details">
+                                            <Link to={`/product/${item.id}`} className="mini-cart__item-name">
+                                            {item.name}
+                                            </Link>
+                                            <span className="mini-cart__item-meta">
+                                                {item.quantity} × ${item.price.toFixed(2)}
+                                            </span>
+                                        </div>
+                                        <span className="mini-cart__item-total">${(item.price * item.quantity).toFixed(2)}</span>
+                                        <button onClick={() => removeFromCart(item.id)} className="mini-cart__remove-item"><TrashIcon /></button>
+                                    </li>
+                                ))}
+                            </ul>
+                            <div className="mini-cart__subtotal">
+                                <span>Subtotal:</span>
+                                <span>${cartSubtotal.toFixed(2)}</span>
+                            </div>
+                        </>
+                    )}
+
+                    {cart.length > 0 && (
+                      <Link
+                          to="/carrito" 
+                          className="view-cart-button"
+                          onClick={() => setShowMiniCart(false)}
+                      >
+                          Ver carrito completo
+                      </Link>
+                    )}
                 </div>
             </div>
-            <div className={`header__searchbar mobile-only ${showSearch ? 'active' : ''}`}>
-                <form onSubmit={handleSearch}>
-                    <input
-                        type="text"
-                        placeholder="Buscar juegos..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <button
-                        type="submit"
-                        className="search-button"
-                    >
-                        <SearchIcon />
-                    </button>
-                </form>
-            </div>
-            <nav className={`header__menu ${showMenu ? 'active' : ''}`}>
-                <ul>
-                    <li>
-                        <Link to="/">Inicio</Link>
-                    </li>
-                    <li>
-                        <Link to="/search">Juegos</Link>
-                    </li>
-                    <li>
-                        <Link to="/contact">Contacto</Link>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+        </>
     );
 };
 
 export default Header;
+
+
+

@@ -1,0 +1,43 @@
+.history-page {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #2f2f2f;
+    min-height: 80vh;
+}
+
+.history-page h1 {
+    text-align: center;
+    margin: 1rem 0 1rem;
+    font-size: 1.5rem;
+    color: #f1f1f1;
+}
+
+.history-layout {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+
+
+
+@media (min-width: 768px) {
+    .history-page h1 {
+        font-size: 1rem;
+    }
+}
+
+
+@media (min-width: 1200px) {
+    .history-layout {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    .history-page h1 {
+        font-size: 3rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+}
+

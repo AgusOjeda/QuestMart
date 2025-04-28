@@ -4,6 +4,8 @@ import HomePage from '../pages/HomePage.tsx'
 import SearchPage from '../pages/SearchPage.tsx'
 import ProductDetail from '../pages/ProductDetail.tsx';
 import ContactPage from '../pages/ContactPage.tsx';
+import CartPage from '../pages/cart/CartPage.tsx';
+import HistoryPage from '../pages/History/HistoryPage.tsx';
 
 const AppRouter: React.FC = () => {
   return (
@@ -13,6 +15,8 @@ const AppRouter: React.FC = () => {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/carrito" element={<CartPage />}/>
+        <Route path="/historial" element={<HistoryPage />}/>
       </Routes>
     </Router>
   );
