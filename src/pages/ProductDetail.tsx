@@ -1,20 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import './ProductDetail.css';
 import { useParams } from 'react-router-dom';
 import { useGameDetails } from '../hooks/useGameData';
 import Footer from '../components/Footer';
-import { useNavigate } from 'react-router-dom';
+import { useCart } from '../context/cart.context'; 
+import { CartItem } from '../context/cart.context';
+import { useHistory } from '../context/historial.context';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const gameId = Number(id);
   const { game, loading, error } = useGameDetails(gameId);
   const [isExpanded, setIsExpanded] = useState(false);
+  const { addToCart } = useCart();
+  const { addToHistory } = useHistory();
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (game) {
+      addToHistory(game);
+    }
+  }, [game]);
 
-  const getDescriptionExcerpt = (description: string, maxWords: number) => {
+
+const getDescriptionExcerpt = (description: string, maxWords: number) => {
     const words = description.split(' ');
     if (words.length <= maxWords) return description;
     return words.slice(0, maxWords).join(' ') + '...';
@@ -24,13 +33,28 @@ const ProductDetail = () => {
     setIsExpanded(!isExpanded);
   };
 
+  const handleAddToCart = () => {
+    if (game && game.cheapestPrice) {
+      const itemToAdd: CartItem = {
+        id: String(game.id),
+        name: game.name,
+        quantity: 1,
+        price: Number(game.cheapestPrice),
+        imageUrl: game.background_image,
+      };
+      addToCart(itemToAdd);
+    } else {
+      console.error('No se puede agregar al carrito: faltan datos del juego o el precio.');
+    }
+  };
+
   return (
     <>
       <Header />
       <main className="product-detail">
         {loading && <div className="loading">Cargando detalles...</div>}
 
-        {(!loading && (error)) && (
+        {(!loading && error) && (
           <div className="error">No se pudo cargar la información del juego.</div>
         )}
 
@@ -50,7 +74,7 @@ const ProductDetail = () => {
 
             <section className="game-details">
               <div className="description-section">
-                {game.description_raw && (
+                 {game.description_raw && (
                   <div className="info-item description">
                     <strong>Descripción:</strong>
                     <p>
@@ -66,17 +90,16 @@ const ProductDetail = () => {
                   </div>
                 )}
                 <div className="price-section">
-                  <button className="buy-button">
-                    Precio: <strong>${game.cheapestPrice || "0.00"}</strong>
-                  </button>
-                  <button
-                    className="share-button"
-                    onClick={() => navigate('/share', { state: { game } })}
-                  >
-                    Compartir con un amigo
-                  </button>
+                  {game.cheapestPrice ? (
+                    <button className="buy-button" onClick={handleAddToCart}>
+                      Agregar al Carrito (${game.cheapestPrice})
+                    </button>
+                  ) : (
+                    <button className="no-price-button" disabled>
+                      Precio no disponible
+                    </button>
+                  )}
                 </div>
-
               </div>
               <div className="details-grid">
                 <div className="info-item">
@@ -85,7 +108,7 @@ const ProductDetail = () => {
 
                 {game.released && (
                   <div className="info-item">
-                    <strong>Lanzamiento:</strong> {new Date(game.released).toLocaleDateString()}
+                    <strong>Lanzamiento:</strong> {game.released}
                   </div>
                 )}
 

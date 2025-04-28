@@ -15,17 +15,26 @@ import GameCard from '../components/GameCard';
 
 
 const SearchPage: React.FC = () => {
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const rawSearchTerm = searchParams.get('q') || '';
+    const rawGenre = searchParams.get('genre');
+    const rawPlatform = searchParams.get('platform');
+    const rawSort = searchParams.get('sort');
 
     const [searchTerm, setSearchTerm] = useState(rawSearchTerm);
     const [page, setPage] = useState(1);
     const [allGames, setAllGames] = useState<GameWithPrices[]>([]);
-    const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
-    const [sortOrder, setSortOrder] = useState<'best' | 'worst' | null>(null);
+    const [selectedGenre, setSelectedGenre] = useState<number | null>(
+        rawGenre ? parseInt(rawGenre) : null
+    );
+    const [sortOrder, setSortOrder] = useState<'best' | 'worst' | null>(
+        rawSort === 'best' || rawSort === 'worst' ? rawSort : null
+    );
     const [showFiltersMobile, setShowFiltersMobile] = useState(false);
     const [showPlatformMobile, setShowPlatformMobile] = useState(false);
-    const [selectedPlatform, setSelectedPlatform] = useState<number | null>(null);
+    const [selectedPlatform, setSelectedPlatform] = useState<number | null>(
+        rawPlatform ? parseInt(rawPlatform) : null
+    );
     const debouncedSearchTerm = useDebounce(searchTerm, 500);
     const sidebarRef = useRef<HTMLDivElement>(null);
     const platformSidebarRef = useRef<HTMLDivElement>(null);
@@ -66,6 +75,7 @@ const SearchPage: React.FC = () => {
 
     const handleGenreSelect = (genreId: number | null) => {
         setSelectedGenre(genreId);
+        updateSearchParams({ genre: genreId?.toString() || null });
         setShowFiltersMobile(false);
     };
 
@@ -112,7 +122,22 @@ const SearchPage: React.FC = () => {
 
     const handlePlatformSelect = (platformId: number | null) => {
         setSelectedPlatform(platformId);
+        updateSearchParams({ platform: platformId?.toString() || null });
         setShowPlatformMobile(false);
+    };
+
+    const updateSearchParams = (updates: Record<string, string | null>) => {
+        const newParams = new URLSearchParams(searchParams.toString());
+    
+        Object.entries(updates).forEach(([key, value]) => {
+            if (value === null || value === '') {
+                newParams.delete(key);
+            } else {
+                newParams.set(key, value);
+            }
+        });
+    
+        setSearchParams(newParams);
     };
 
     return (
@@ -178,10 +203,9 @@ const SearchPage: React.FC = () => {
                                 value={sortOrder || ''}
                                 onChange={(e) => {
                                     const value = e.target.value;
-                                    setSortOrder(
-                                        value === 'best' ? 'best' :
-                                            value === 'worst' ? 'worst' : null
-                                    );
+                                    const order = value === 'best' || value === 'worst' ? value : null;
+                                    setSortOrder(order);
+                                    updateSearchParams({ sort: order });
                                 }}
                             >
                                 <option value="">Mas Relevantes</option>

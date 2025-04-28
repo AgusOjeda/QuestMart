@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import useSWR, { SWRConfiguration } from 'swr';
 import * as RAWGService from '../services/rawg.service';
 import * as CheapSharkService from '../services/cheapsharkdeals.service';
@@ -32,6 +32,10 @@ export const useGameDetails = (gameId: number) => {
     swrConfig
   );
 
+  useEffect(() => {
+      setGameWithPrices(null);
+    }, [gameId]);
+
   const fetchPrices = useCallback(async () => {
     if (data) {
       try {
@@ -51,14 +55,16 @@ export const useGameDetails = (gameId: number) => {
     }
   }, [data]);
 
-  useSWR(data ? 'enrichGameDetails' : null, () => fetchPrices(), {
+  useSWR(data ? ['enrichGameDetails', gameId] : null, () => fetchPrices(), {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
+    revalidateIfStale: true
   });
+  const combinedLoading = isLoading || (!gameWithPrices && !error) || isValidating;
 
   return {
     game: gameWithPrices,
-    loading: isLoading || isValidating,
+    loading: combinedLoading,
     error,
     refetch: mutate
   };
