@@ -86,7 +86,7 @@ const SharePage = () => {
             - Precio: $${game.cheapestPrice || '0.00'}
             - Nota: ${game.rating.toFixed(1)} / 5
             - Plataformas: ${game.platforms.map((p: { platform: { name: string } }) => p.platform.name).join(', ')}
-            - Fecha de lanzamiento: ${game.released}
+            - Fecha de lanzamiento: ${new Date(game.released).toLocaleDateString()}
 
             -------------------------------------------------------------------------------------------------------
 
@@ -116,9 +116,8 @@ const SharePage = () => {
                             <p><strong>Nombre:</strong> {game.name}</p>
                             <p><strong>Precio:</strong> ${game.cheapestPrice || '0.00'}</p>
                             <p><strong>Nota:</strong> {game.rating.toFixed(1)} / 5</p>
-                            <p><strong>Fecha de lanzamiento:</strong> {game.released}</p>
+                            <p><strong>Fecha de lanzamiento:</strong> {new Date(game.released).toLocaleDateString()}</p>
                         </div>
-
                         <hr />
 
                         <form onSubmit={handleSend} className="share-form">
