@@ -26,7 +26,6 @@ const SharePage = () => {
         return regex.test(email);
     };
 
-
     //Validaciones para ambos correos
 
     const handleSenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,7 +80,7 @@ const SharePage = () => {
         if (!valid) return;
 
         const subject = `¡Mirá este juego: ${game.name}!`;
-        const body = `Te recomiendo este juego, es muy bueno:
+        const body = `Tu amig@ (${senderEmail}) quiere compartirte este juego que le parecio interesante!
             - Nombre: ${game.name}
             - Precio: $${game.cheapestPrice || '0.00'}
             - Nota: ${game.rating.toFixed(1)} / 5
@@ -90,6 +89,7 @@ const SharePage = () => {
 
             -------------------------------------------------------------------------------------------------------
 
+            Mensaje adicional de ${senderEmail}:
             ${message}
 
             `;

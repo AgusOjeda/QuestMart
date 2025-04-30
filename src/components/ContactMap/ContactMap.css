@@ -1,9 +1,8 @@
-
 .contact-map-container {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
-    margin: 1rem 0;
+    margin: 1rem 1 1rem;
 }
 
 .custom-leaflet-map {
@@ -13,7 +12,6 @@
 }
 
 .leaflet-popup-content {
-    font-family: 'Arial', sans-serif;
     font-size: 0.9rem;
     line-height: 1.4;
     color: #151515;

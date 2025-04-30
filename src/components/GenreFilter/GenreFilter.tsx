@@ -15,7 +15,7 @@ const GenreFilter: React.FC<GenreFilterProps> = ({ selectedGenreId, onGenreSelec
   if (error) return <p>Error al cargar los géneros</p>;
 
   return (
-    <aside className="genre-filter">
+    <div className="genre-filter">
       <button
         className="genre-toggle"
         onClick={() => setIsOpen(prev => !prev)}
@@ -41,7 +41,7 @@ const GenreFilter: React.FC<GenreFilterProps> = ({ selectedGenreId, onGenreSelec
           </li>
         ))}
       </ul>
-    </aside>
+    </div>
   );
 };
 

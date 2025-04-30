@@ -11,7 +11,7 @@ const Header = () => {
     const [search, setSearch] = useState('');
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const { cart, removeFromCart } = useCart();
+    const { cart, removeFromCart, incrementQuantity, decrementQuantity } = useCart();
 
     useEffect(() => {
         const query = searchParams.get('q');
@@ -21,19 +21,6 @@ const Header = () => {
             setSearch('');
         }
     }, [searchParams]);
-
-    // Cierra menú/búsqueda/carrito si se navega a otra página (opcional pero buena UX)
-    useEffect(() => {
-        const handleRouteChange = () => {
-            setShowMenu(false);
-            setShowSearch(false);
-            setShowMiniCart(false);
-        };
-
-        return () => {
-        };
-    }, []);
-
 
     useEffect(() => {
         if (showMiniCart) {
@@ -107,6 +94,7 @@ const Header = () => {
                 </div>
 
                 {/* Búsqueda Móvil */}
+                
                 <div className={`header__searchbar mobile-only ${showSearch ? 'active' : ''}`}>
                     <form onSubmit={handleSearch}>
                         <input
@@ -139,6 +127,9 @@ const Header = () => {
                     </ul>
                 </nav>
             </header>
+
+            {/* Mini-cart */}
+
             <div
                 className={`mini-cart-overlay ${showMiniCart ? 'active' : ''}`}
                 onClick={() => setShowMiniCart(false)}
@@ -174,12 +165,32 @@ const Header = () => {
                                             <Link to={`/product/${item.id}`} className="mini-cart__item-name">
                                                 {item.name}
                                             </Link>
-                                            <span className="mini-cart__item-meta">
-                                                {item.quantity} × ${item.price.toFixed(2)}
-                                            </span>
+                                            <div className="mini-cart__item-meta-wrapper">
+                                                <span className="mini-cart__item-meta">
+                                                    {item.quantity} × ${item.price.toFixed(2)}
+                                                </span>
+                                                <div className="mini-cart__quantity-controls">
+                                                    <button
+                                                        onClick={() => decrementQuantity(item.id)}
+                                                        aria-label="Disminuir cantidad"
+                                                    >
+                                                        −
+                                                    </button>
+                                                    <button
+                                                        onClick={() => incrementQuantity(item.id)}
+                                                        aria-label="Aumentar cantidad"
+                                                    >
+                                                        +
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <span className="mini-cart__item-total">${(item.price * item.quantity).toFixed(2)}</span>
-                                        <button onClick={() => removeFromCart(item.id)} className="mini-cart__remove-item"><TrashIcon /></button>
+                                        <div className="mini-cart__item-actions">
+                                            <span className="mini-cart__item-total">${(item.price * item.quantity).toFixed(2)}</span>
+                                            <button onClick={() => removeFromCart(item.id)} className="mini-cart__remove-item">
+                                                <TrashIcon />
+                                            </button>
+                                        </div>
                                     </li>
                                 ))}
                             </ul>
@@ -206,6 +217,3 @@ const Header = () => {
 };
 
 export default Header;
-
-
-

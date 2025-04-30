@@ -14,10 +14,8 @@ const buildUrl = (endpoint: string, params: Record<string, string | number> = {}
   return url.toString();
 };
 
-/**
- * Obtiene los detalles de un juego específico
- * @param gameId ID del juego
- */
+// Obtiene los detalles de un juego específico 
+
 export const getGameDetails = async (gameId: number): Promise<Game> => {
   try {
     const url = buildUrl(`/games/${gameId}`);
@@ -34,9 +32,8 @@ export const getGameDetails = async (gameId: number): Promise<Game> => {
   }
 };
 
-/**
- * Obtiene lista de géneros disponibles
- */
+// Obtiene lista de géneros disponibles 
+
 export const getGenres = async (): Promise<{ results: Genre[] }> => {
   try {
     const url = buildUrl('/genres');
@@ -52,15 +49,9 @@ export const getGenres = async (): Promise<{ results: Genre[] }> => {
     throw error;
   }
 };
-/**
- * Busca juegos por una palabra clave y/o por género
- * @param query Término de búsqueda
- * @param genreId ID del género (opcional)
- * @param platformId ID de la plataforma (opcional)
- * @param sortOrder Orden de calificación ('best', 'worst' o null)
- * @param page Número de página (por defecto: 1)
- * @param pageSize Tamaño de la página (por defecto: 10)
- */
+
+// Buscar juegos por palabra clave y filtros 
+
 export const searchGamesWithFilters = async (
   query: string,
   genreId: number | null = null,
@@ -104,9 +95,8 @@ export const searchGamesWithFilters = async (
   }
 };
 
-/**
- * Obtiene lista de plataformas disponibles
- */
+// Obtiene la lista de plataformas disponibles
+
 export const getPlatforms = async (): Promise<PlatformOption[]> => {
   try {
     const url = buildUrl('/platforms');

@@ -15,7 +15,7 @@ const PlatformFilter: React.FC<PlatformFilterProps> = ({ selectedPlatformId, onP
   if (error) return <p>Error al cargar las plataformas</p>;
 
   return (
-    <aside className="platform-filter">
+    <div className="platform-filter">
       <button
         className="platform-toggle"
         onClick={() => setIsOpen(prev => !prev)}
@@ -41,7 +41,7 @@ const PlatformFilter: React.FC<PlatformFilterProps> = ({ selectedPlatformId, onP
           </li>
         ))}
       </ul>
-    </aside>
+    </div>
   );
 };
 

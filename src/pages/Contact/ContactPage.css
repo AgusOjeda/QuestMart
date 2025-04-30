@@ -13,18 +13,20 @@
     gap: 1.5rem;
 }
 
+.contact-info {
+    margin: 0 auto;
+}
 
 .contact-map {
-    width: 100%;
+    margin: 0 auto 2rem;
+    width: 90%;
     height: 300px;
     border-radius: 8px;
     background-color: #151515;
 }
 
-
 @media (min-width: 768px) {
     .contact-body {
-        flex-direction: column;
         justify-content: space-between;
         flex-wrap: wrap;
         padding: 2rem;

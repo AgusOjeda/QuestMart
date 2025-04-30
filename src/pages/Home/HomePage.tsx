@@ -4,21 +4,21 @@ import PromoCarousel from '../../components/PromoCarousel/PromoCarousel';
 import GameRow from '../../components/GameRow/GameRow';
 import './HomePage.css';
 import Footer from '../../components/Footer/Footer';
-import { useGenres } from '../../hooks/useGameData'; 
+import { useGenres } from '../../hooks/useGameData';
 
 const HomePage = () => {
   const [indieGenreId, setIndieGenreId] = useState<number | null>(null);
-  
-  const { genres, loading } = useGenres(); 
+
+  const { genres, loading } = useGenres();
 
   useEffect(() => {
     if (genres.length > 0) {
       const indieGenre = genres.find((genre) => genre.name.toLowerCase() === 'indie');
       if (indieGenre) {
-        setIndieGenreId(indieGenre.id); 
+        setIndieGenreId(indieGenre.id);
       }
     }
-  }, [genres]); 
+  }, [genres]);
 
   return (
     <>
@@ -29,20 +29,20 @@ const HomePage = () => {
         </section>
 
         <section className="categories">
-          <GameRow 
-            title="Juegos Destacados" 
-            genreId={null} 
-            platformId={null} 
-            sortOrder={null} 
+          <GameRow
+            title="Juegos Destacados"
+            genreId={null}
+            platformId={null}
+            sortOrder={null}
           />
         </section>
 
         <section className="featured">
-          <GameRow 
+          <GameRow
             title="Mejores por Calificación"
-            genreId={null} 
-            platformId={null} 
-            sortOrder="best" 
+            genreId={null}
+            platformId={null}
+            sortOrder="best"
           />
         </section>
 
@@ -50,11 +50,11 @@ const HomePage = () => {
           {loading ? (
             <div>Cargando juegos...</div>
           ) : indieGenreId !== null ? (
-            <GameRow 
+            <GameRow
               title="Juegos Indies"
-              genreId={indieGenreId} 
-              platformId={null} 
-              sortOrder={null} 
+              genreId={indieGenreId}
+              platformId={null}
+              sortOrder={null}
             />
           ) : (
             <div>No se encontró el género Indie.</div>

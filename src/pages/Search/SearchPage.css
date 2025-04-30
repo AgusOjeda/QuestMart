@@ -1,6 +1,4 @@
-/* 
-   Layout general
-*/
+/* Layout general */
 
 .search-page {
     padding: 20px;
@@ -22,7 +20,6 @@
     flex-direction: column;
     position: relative;
 }
-
 
 @media (min-width: 768px) {
     .search-page h1 {
@@ -48,9 +45,7 @@
 }
 
 
-/* 
-   Filtros / Sidebar
-*/
+/* Filtros / Sidebar */
 
 .filter-toggle-btn, .platform-toggle-btn {
     display: block;
@@ -108,9 +103,7 @@
 }
 
 
-/* 
-   Contenido principal
-*/
+/*  Contenido principal */
 
 .content-container {
     flex: 1;
@@ -119,9 +112,7 @@
 }
 
 
-/* 
-   Selector de orden
-*/
+/*  Selector de orden */
 
 .sort-container {
     display: flex;
@@ -164,9 +155,7 @@
 }
 
 
-/* 
-   Tarjetas de juegos
-*/
+/*  Tarjetas de juegos */
 
 .games-container {
     display: flex;
@@ -178,9 +167,7 @@
 }
 
 
-/* 
-   Cargar más
- */
+/*  Cargar más */
 
 .load-more-container {
     width: 100%;

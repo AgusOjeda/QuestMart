@@ -1,6 +1,4 @@
-/**
- * Tipos de datos para la API RAWG
- */
+//Tipos de datos para la API RAWG
 
 export interface Game {
   id: number;

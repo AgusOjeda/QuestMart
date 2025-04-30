@@ -1,6 +1,4 @@
-/**
- * Tipos de datos para la API CheapShark
- */
+// Tipos de datos para la API CheapShark
 
 export interface GameDeal {
   gameID: string;

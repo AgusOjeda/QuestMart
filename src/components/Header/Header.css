@@ -1,3 +1,5 @@
+/* Diseño del Header */
+
 .header {
   background-color: #151515;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -26,7 +28,7 @@
 
 .header__logo img {
   width: 100%;
-  max-width: 300px;
+  max-width: 200px;
 }
 
 .header__icon:hover {
@@ -166,6 +168,15 @@
   display: none;
 }
 
+
+
+
+
+/* Diseño del mini-cart */
+
+
+
+
 .cart-icon {
   position: relative;
   background: none;
@@ -223,7 +234,7 @@
 .mini-cart {
   background: #242424;
   color: #fff;
-  width: 85%;
+  width: 100%;
   max-width: 360px;
   height: 100%;
   padding: 1.5rem 1rem;
@@ -283,8 +294,7 @@
   margin: 0;
   flex-grow: 1;
   overflow-y: auto;
-  /* Opcional: Añadir padding si el scrollbar molesta */
-  /* padding-right: 5px; */
+  overflow-x: hidden;
 }
 
 .mini-cart__item {
@@ -320,9 +330,44 @@
   font-size: 0.95rem;
 }
 
+.mini-cart__item-meta-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
 .mini-cart__item-meta {
   font-size: 0.85rem;
   color: #bbb;
+}
+
+.mini-cart__quantity-controls {
+  display: flex;
+  gap: 1px;
+  align-items: center;
+}
+
+.mini-cart__quantity-controls button {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 3px;
+}
+
+.mini-cart__quantity-controls button:hover{
+  color: #646cff;
+}
+
+.mini-cart__item-actions {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  margin-left: auto;
+  flex-shrink: 0;
+  flex-direction: column;
 }
 
 .mini-cart__item-total {
@@ -393,7 +438,11 @@
   color: #fff;
 }
 
-/* Desktop view */
+
+
+/* Desktop view Header */
+
+
 @media (min-width: 1200px) {
   .header__top {
     max-width: 1200px;
@@ -410,7 +459,6 @@
     gap: 24px;
     flex: 1;
     justify-content: flex-start;
-    margin-left: -150px;
   }
 
   .header__right {
@@ -421,10 +469,6 @@
 
   .header__left {
     display: none;
-  }
-
-  .header__icon {
-    font-size: 28px;
   }
 
   .header__menu {
@@ -451,14 +495,13 @@
   .desktop-only {
     display: block;
   }
-
-  .header__logo.desktop-only {
-    margin-right: 120px;
-  }
-
 }
 
+
+
 /* Input con Label Flotante */
+
+
 
 .floating-label-input {
   position: relative;

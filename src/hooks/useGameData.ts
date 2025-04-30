@@ -23,6 +23,21 @@ const genresFetcher = async ([_]: ['genres']) => {
   return await RAWGService.getGenres();
 };
 
+const platformsFetcher = async ([_]: ['platforms']): Promise<PlatformOption[]> => {
+  return await RAWGService.getPlatforms();
+};
+
+const searchGamesWithFiltersFetcher = async (
+  [_, query, genreId, platformId, sortOrder, page, pageSize]:
+    ['searchGamesWithFilters', string, number | null, number | null, 'best' | 'worst' | null, number, number]
+) => {
+  return await RAWGService.searchGamesWithFilters(query, genreId, platformId, sortOrder, page, pageSize);
+};
+
+
+// Hook para obtener los detalles de un juego
+
+
 export const useGameDetails = (gameId: number) => {
   const [gameWithPrices, setGameWithPrices] = useState<GameWithPrices | null>(null);
 
@@ -88,17 +103,8 @@ export const useGenres = () => {
 };
 
 
-//Fetch
+// Hook para realizar la busqueda de juegos con filtros concatenados
 
-// Fetcher para juegos con filtros
-const searchGamesWithFiltersFetcher = async (
-  [_, query, genreId, platformId, sortOrder, page, pageSize]:
-    ['searchGamesWithFilters', string, number | null, number | null, 'best' | 'worst' | null, number, number]
-) => {
-  return await RAWGService.searchGamesWithFilters(query, genreId, platformId, sortOrder, page, pageSize);
-};
-
-// Busqueda con juegos con filtros concatenados
 
 export const useGameSearchWithFilters = (
   searchTerm: string,
@@ -130,11 +136,9 @@ export const useGameSearchWithFilters = (
   };
 };
 
-//Fetch y hook para obtener las plataformas que existen
 
-const platformsFetcher = async ([_]: ['platforms']): Promise<PlatformOption[]> => {
-  return await RAWGService.getPlatforms();
-};
+//Hook para obtener las plataformas que existen
+
 
 export const usePlatforms = () => {
 

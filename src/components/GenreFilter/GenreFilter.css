@@ -2,7 +2,6 @@
     padding: 1rem;
   }
   
-  /* Botón de la flecha en Desktop */
   .genre-toggle {
     display: none;
     align-items: center;
@@ -16,7 +15,6 @@
     padding: 0.5rem 0;
   }
   
-  /* Flecha animada */
   .arrow {
     display: inline-block;
     margin-left: 0.5rem;

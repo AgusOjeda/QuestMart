@@ -1,3 +1,5 @@
+//Tipo de datos para el carrito
+
 import { GameWithPrices } from "./game.types";
 
 export interface CartItem extends GameWithPrices {

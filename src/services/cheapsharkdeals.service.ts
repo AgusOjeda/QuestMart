@@ -1,17 +1,15 @@
 import { GameDeal, Deal, Store } from '../types/cheapshark.types';
 
-// Configuración de la API
 const API_BASE_URL = 'https://www.cheapshark.com/api/1.0';
 
 // Caché de las tiendas para no solicitarlas cada vez
+
 let storesCache: Store[] | null = null;
 
-/**
- * Obtiene todas las tiendas disponibles
- */
+// Obtiene todas las tiendas disponibles 
+
 export const getStores = async (): Promise<Store[]> => {
   try {
-    // Si ya están en caché, devuelve la caché
     if (storesCache) {
       return storesCache;
     }
@@ -31,11 +29,8 @@ export const getStores = async (): Promise<Store[]> => {
   }
 };
 
-/**
- * Busca ofertas de juegos por título
- * @param title Título del juego
- * @param limit Número máximo de resultados (por defecto: 10)
- */
+//Busca ofertas de juegos por título
+
 export const getGameDeals = async (title: string, limit = 10): Promise<GameDeal[]> => {
   try {
     const encodedTitle = encodeURIComponent(title);
@@ -64,10 +59,8 @@ export const getGameDeals = async (title: string, limit = 10): Promise<GameDeal[
   }
 };
 
-/**
- * Obtiene los detalles de un juego específico por ID
- * @param gameId ID del juego en CheapShark
- */
+//Obtiene los detalles de un juego específico por ID
+
 export const getGameDealById = async (gameId: string): Promise<GameDeal> => {
   try {
     const url = `${API_BASE_URL}/games?id=${gameId}`;

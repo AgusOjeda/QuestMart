@@ -1,7 +1,4 @@
-/**
- * Tipos de datos utiles
- */
-
+//Tipos de datos utiles
 
 export interface SuccessAlertProps {
     message: string;

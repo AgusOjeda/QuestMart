@@ -35,8 +35,6 @@ const ContactMap = () => {
                     console.error('Error obteniendo la ubicación del usuario:', error);
                 }
             );
-        } else {
-            alert('Tu navegador no soporta geolocalización');
         }
     }, []);
 

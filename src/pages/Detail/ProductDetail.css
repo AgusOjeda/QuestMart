@@ -78,7 +78,8 @@
   gap: 20px;
 }
 
-/* Descripción + Precio lado a lado  */
+/* Descripción y precio */
+
 .description-section {
   display: flex;
   flex-wrap: wrap;
@@ -90,6 +91,7 @@
 .description {
   flex: 2;
   min-width: 70%;
+  word-break: break-word;
 }
 
 .price-section {
@@ -133,7 +135,9 @@
   font-weight: bold;
   transition: background 0.3s;
 }
+
 /*  Cards generales */
+
 .info-item {
   background-color: #242424;
   padding: 20px;
@@ -153,7 +157,6 @@
   margin: 0;
 }
 
-/* Grilla de 3 columnas*/
 .details-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

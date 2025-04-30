@@ -13,7 +13,6 @@ import GameCard from '../../components/GameCard/GameCard.tsx'
 
 
 
-
 const SearchPage: React.FC = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const rawSearchTerm = searchParams.get('q') || '';
@@ -174,7 +173,7 @@ const SearchPage: React.FC = () => {
 
                 <div className="search-layout">
                     <div className="sidebars-container">
-                        <aside
+                        <div
                             className={`genre-sidebar ${showFiltersMobile ? 'open' : ''}`}
                             ref={sidebarRef}
                         >
@@ -182,8 +181,8 @@ const SearchPage: React.FC = () => {
                                 selectedGenreId={selectedGenre}
                                 onGenreSelect={handleGenreSelect}
                             />
-                        </aside>
-                        <aside
+                        </div>
+                        <div
                             className={`platform-sidebar ${showPlatformMobile ? 'open' : ''}`}
                             ref={platformSidebarRef}
                         >
@@ -191,7 +190,7 @@ const SearchPage: React.FC = () => {
                                 selectedPlatformId={selectedPlatform}
                                 onPlatformSelect={handlePlatformSelect}
                             />
-                        </aside>
+                        </div>
                     </div>
                     <div className="content-container">
                         <div className="sort-container">
