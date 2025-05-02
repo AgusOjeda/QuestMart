@@ -1,0 +1,49 @@
+.contact {
+    margin: 0 auto;
+    background-color: #2f2f2f;
+    color: #fff;
+    min-height: 100vh;
+}
+
+.contact-body {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.contact-info {
+    margin: 0 auto;
+}
+
+.contact-map {
+    margin: 0 auto 2rem;
+    width: 90%;
+    height: 300px;
+    border-radius: 8px;
+    background-color: #151515;
+}
+
+@media (min-width: 768px) {
+    .contact-body {
+        justify-content: space-between;
+        flex-wrap: wrap;
+        padding: 2rem;
+        gap: 2rem;
+    }
+
+    .contact-map {
+        flex: 1;
+        height: 400px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .contact-body{
+        flex-direction: row;
+    }
+    .contact-map {
+        height: 500px;
+    }
+}

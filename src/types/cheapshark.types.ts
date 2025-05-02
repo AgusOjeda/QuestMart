@@ -1,13 +1,11 @@
-/**
- * Tipos de datos para la API CheapShark
- */
+// Tipos de datos para la API CheapShark
 
 export interface GameDeal {
   gameID: string;
   steamAppID?: string;
   cheapest: string;
   cheapestDealID: string;
-  external: string; // Nombre del juego
+  external: string; 
   thumb: string;
   deals: Deal[];
 }
@@ -18,7 +16,7 @@ export interface Deal {
   price: string;
   retailPrice: string;
   savings: string;
-  storeName?: string; // Añadido después de obtener el nombre de la tienda
+  storeName?: string; 
 }
 
 export interface Store {

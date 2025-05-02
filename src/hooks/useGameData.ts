@@ -1,34 +1,19 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import useSWR, { SWRConfiguration } from 'swr';
 import * as RAWGService from '../services/rawg.service';
 import * as CheapSharkService from '../services/cheapsharkdeals.service';
 import { GameWithPrices } from '../types/game.types';
-import { Game } from '../types/rawg.types';
+import { PlatformOption } from '../types/rawg.types';
 
 const swrConfig: SWRConfiguration = {
-  revalidateOnFocus: true,
-  revalidateOnReconnect: true,
-  refreshInterval: 0, 
+  revalidateOnFocus: false,
+  revalidateOnReconnect: false,
+  refreshInterval: 0,
   shouldRetryOnError: true,
   dedupingInterval: 2000,
 };
 
 // Fetchers para SWR
-const gamesFetcher = async ([_, page, pageSize]: ['games', number, number]) => {
-  const gamesData = await RAWGService.getGames(page, pageSize);
-  return gamesData;
-};
-
-const searchGamesFetcher = async ([_, query, page, pageSize]: ['searchGames', string, number, number]) => {
-  if (!query.trim()) {
-    return { count: 0, results: [], next: null, previous: null };
-  }
-  return await RAWGService.searchGames(query, page, pageSize);
-};
-
-const genreGamesFetcher = async ([_, genreId, page, pageSize]: ['genreGames', number, number, number]) => {
-  return await RAWGService.filterGamesByGenre(genreId, page, pageSize);
-};
 
 const gameDetailsFetcher = async ([_, id]: ['gameDetails', number]) => {
   return await RAWGService.getGameDetails(id);
@@ -38,115 +23,39 @@ const genresFetcher = async ([_]: ['genres']) => {
   return await RAWGService.getGenres();
 };
 
+const platformsFetcher = async ([_]: ['platforms']): Promise<PlatformOption[]> => {
+  return await RAWGService.getPlatforms();
+};
 
-const enrichGamesWithPrices = async (games: Game[]): Promise<GameWithPrices[]> => {
-  if (!games || games.length === 0) return [];
-
-  try {
-    const gamesWithPrices = await Promise.all(
-      games.map(async (game) => {
-        try {
-          const deals = await CheapSharkService.getGameDeals(game.name, 5);
-          
-          return {
-            ...game,
-            deals: deals.length > 0 ? deals : undefined,
-            cheapestPrice: deals.length > 0 ? deals[0].cheapest : undefined
-          };
-        } catch (err) {
-          console.warn(`No se encontraron precios para: ${game.name}`, err);
-          return game;
-        }
-      })
-    );
-    return gamesWithPrices;
-  } catch (error) {
-    console.error('Error enriqueciendo juegos con precios:', error);
-    return games;
-  }
+const searchGamesWithFiltersFetcher = async (
+  [_, query, genreId, platformId, sortOrder, page, pageSize]:
+    ['searchGamesWithFilters', string, number | null, number | null, 'best' | 'worst' | null, number, number]
+) => {
+  return await RAWGService.searchGamesWithFilters(query, genreId, platformId, sortOrder, page, pageSize);
 };
 
 
-export const useGames = (page = 1, pageSize = 20) => {
-  const [gamesWithPrices, setGamesWithPrices] = useState<GameWithPrices[]>([]);
-  
-  const { data, error, isLoading, isValidating, mutate } = useSWR(
-    ['games', page, pageSize],
-    gamesFetcher,
-    swrConfig
-  );
-  
-  const fetchPrices = useCallback(async () => {
-    if (data?.results && data.results.length > 0) {
-      const enrichedGames = await enrichGamesWithPrices(data.results);
-      setGamesWithPrices(enrichedGames);
-    } else {
-      setGamesWithPrices([]);
-    }
-  }, [data]);
-  
-  useSWR(data ? 'enrichGames' : null, () => fetchPrices(), {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  });
-  
-  return {
-    games: gamesWithPrices,
-    loading: isLoading || isValidating,
-    error,
-    hasMore: !!data?.next,
-    totalCount: data?.count || 0,
-    refetch: mutate
-  };
-};
+// Hook para obtener los detalles de un juego
 
-export const useGameSearch = (searchTerm: string, page = 1, pageSize = 20) => {
-  const [gamesWithPrices, setGamesWithPrices] = useState<GameWithPrices[]>([]);
-  
-  const { data, error, isLoading, isValidating, mutate } = useSWR(
-    searchTerm ? ['searchGames', searchTerm, page, pageSize] : null,
-    searchGamesFetcher,
-    swrConfig
-  );
-  
-  const fetchPrices = useCallback(async () => {
-    if (data?.results && data.results.length > 0) {
-      const enrichedGames = await enrichGamesWithPrices(data.results);
-      setGamesWithPrices(enrichedGames);
-    } else {
-      setGamesWithPrices([]);
-    }
-  }, [data]);
-  
-  useSWR(data ? 'enrichSearchGames' : null, () => fetchPrices(), {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  });
-  
-  return {
-    games: gamesWithPrices,
-    loading: isLoading || isValidating,
-    error,
-    hasMore: !!data?.next,
-    totalCount: data?.count || 0,
-    refetch: mutate
-  };
-};
 
 export const useGameDetails = (gameId: number) => {
   const [gameWithPrices, setGameWithPrices] = useState<GameWithPrices | null>(null);
-  
+
   const { data, error, isLoading, isValidating, mutate } = useSWR(
     gameId ? ['gameDetails', gameId] : null,
     gameDetailsFetcher,
     swrConfig
   );
-  
+
+  useEffect(() => {
+      setGameWithPrices(null);
+    }, [gameId]);
+
   const fetchPrices = useCallback(async () => {
     if (data) {
       try {
         const deals = await CheapSharkService.getGameDeals(data.name, 10);
-        
+
         setGameWithPrices({
           ...data,
           deals: deals.length > 0 ? deals : undefined,
@@ -160,49 +69,65 @@ export const useGameDetails = (gameId: number) => {
       setGameWithPrices(null);
     }
   }, [data]);
-  
-  useSWR(data ? 'enrichGameDetails' : null, () => fetchPrices(), {
+
+  useSWR(data ? ['enrichGameDetails', gameId] : null, () => fetchPrices(), {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
+    revalidateIfStale: true
   });
-  
+  const combinedLoading = isLoading || (!gameWithPrices && !error) || isValidating;
+
   return {
     game: gameWithPrices,
+    loading: combinedLoading,
+    error,
+    refetch: mutate
+  };
+};
+
+// Hook para obtener géneros disponibles
+
+export const useGenres = () => {
+  const { data, error, isLoading, isValidating, mutate } = useSWR(
+    ['genres'],
+    genresFetcher,
+    swrConfig
+  );
+
+  return {
+    genres: data?.results || [],
     loading: isLoading || isValidating,
     error,
     refetch: mutate
   };
 };
 
-// Hook para filtrar juegos por género
-export const useGamesByGenre = (genreId: number, page = 1, pageSize = 20) => {
-  const [gamesWithPrices, setGamesWithPrices] = useState<GameWithPrices[]>([]);
-  
-  // Utilizamos SWR para obtener juegos por género
+
+// Hook para realizar la busqueda de juegos con filtros concatenados
+
+
+export const useGameSearchWithFilters = (
+  searchTerm: string,
+  genreId: number | null = null,
+  platformId: number | null = null,
+  sortOrder: 'best' | 'worst' | null = null,
+  page = 1,
+  pageSize = 10
+) => {
   const { data, error, isLoading, isValidating, mutate } = useSWR(
-    genreId ? ['genreGames', genreId, page, pageSize] : null,
-    genreGamesFetcher,
-    swrConfig
-  );
-  
-  // Al recibir juegos filtrados, añadimos los precios
-  const fetchPrices = useCallback(async () => {
-    if (data?.results && data.results.length > 0) {
-      const enrichedGames = await enrichGamesWithPrices(data.results);
-      setGamesWithPrices(enrichedGames);
-    } else {
-      setGamesWithPrices([]);
+    ['searchGamesWithFilters', searchTerm, genreId, platformId, sortOrder, page, pageSize],
+    searchGamesWithFiltersFetcher,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      revalidateIfStale: false,
+      revalidateOnMount: true,
+      dedupingInterval: 10000,
     }
-  }, [data]);
-  
-  // Efecto para cargar precios cuando cambia la data
-  useSWR(data ? 'enrichGenreGames' : null, () => fetchPrices(), {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  });
-  
+  );
+
   return {
-    games: gamesWithPrices,
+    games: data?.results || [],
     loading: isLoading || isValidating,
     error,
     hasMore: !!data?.next,
@@ -211,19 +136,22 @@ export const useGamesByGenre = (genreId: number, page = 1, pageSize = 20) => {
   };
 };
 
-// Hook para obtener géneros disponibles
-export const useGenres = () => {
-  // Utilizamos SWR para obtener géneros
+
+//Hook para obtener las plataformas que existen
+
+
+export const usePlatforms = () => {
+
   const { data, error, isLoading, isValidating, mutate } = useSWR(
-    ['genres'],
-    genresFetcher,
+    ['platforms'],
+    platformsFetcher,
     swrConfig
   );
-  
+
   return {
-    genres: data?.results || [],
+    platforms: data || [],
     loading: isLoading || isValidating,
     error,
     refetch: mutate
   };
-}; 
+};

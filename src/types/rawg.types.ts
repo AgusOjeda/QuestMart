@@ -1,6 +1,4 @@
-/**
- * Tipos de datos para la API RAWG
- */
+//Tipos de datos para la API RAWG
 
 export interface Game {
   id: number;
@@ -52,3 +50,8 @@ export interface RAWGResponse {
   previous: string | null;
   results: Game[];
 } 
+
+export interface PlatformOption {
+  id: number;
+  name: string;
+}
