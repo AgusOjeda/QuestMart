@@ -66,7 +66,7 @@ const SearchPage: React.FC = () => {
     useEffect(() => {
         setPage(1);
         setAllGames([]);
-    }, [sortOrder, selectedGenre]);
+    }, [sortOrder, selectedGenre, selectedPlatform]);
 
     const { games, loading, error, hasMore } = useGameSearchWithFilters(
         debouncedSearchTerm,
@@ -84,19 +84,6 @@ const SearchPage: React.FC = () => {
             );
         }
     }, [games]);
-
-    const loadMore = () => {
-        if (hasMore && !loading) {
-            setPage(prev => prev + 1);
-        }
-    };
-
-    const handleGenreSelect = (genreId: number | null) => {
-        setSelectedGenre(genreId);
-        updateSearchParams({ genre: genreId?.toString() || null });
-        setAllGames([]);
-        setShowFiltersMobile(false);
-    };
 
     useEffect(() => {
         document.body.style.overflow = showFiltersMobile ? 'hidden' : 'auto';
@@ -142,8 +129,19 @@ const SearchPage: React.FC = () => {
     const handlePlatformSelect = (platformId: number | null) => {
         setSelectedPlatform(platformId);
         updateSearchParams({ platform: platformId?.toString() || null });
-        setAllGames([]);
         setShowPlatformMobile(false);
+    };
+
+    const handleGenreSelect = (genreId: number | null) => {
+        setSelectedGenre(genreId);
+        updateSearchParams({ genre: genreId?.toString() || null });
+        setShowFiltersMobile(false);
+    };
+
+        const loadMore = () => {
+        if (hasMore && !loading) {
+            setPage(prev => prev + 1);
+        }
     };
 
     const updateSearchParams = (updates: Record<string, string | null>) => {
