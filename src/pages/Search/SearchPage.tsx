@@ -45,6 +45,25 @@ const SearchPage: React.FC = () => {
     }, [rawSearchTerm]);
 
     useEffect(() => {
+        const parsedGenre = rawGenre ? parseInt(rawGenre) : null;
+        const parsedPlatform = rawPlatform ? parseInt(rawPlatform) : null;
+        const parsedSort = rawSort === 'best' || rawSort === 'worst' ? rawSort : null;
+    
+        const isSame =
+            parsedGenre === selectedGenre &&
+            parsedPlatform === selectedPlatform &&
+            parsedSort === sortOrder;
+    
+        if (!isSame) {
+            setSelectedGenre(parsedGenre);
+            setSelectedPlatform(parsedPlatform);
+            setSortOrder(parsedSort);
+            setPage(1);
+            setAllGames([]);
+        }
+    }, [rawGenre, rawPlatform, rawSort]);
+
+    useEffect(() => {
         setPage(1);
         setAllGames([]);
     }, [sortOrder, selectedGenre]);
@@ -75,6 +94,7 @@ const SearchPage: React.FC = () => {
     const handleGenreSelect = (genreId: number | null) => {
         setSelectedGenre(genreId);
         updateSearchParams({ genre: genreId?.toString() || null });
+        setAllGames([]);
         setShowFiltersMobile(false);
     };
 
@@ -122,6 +142,7 @@ const SearchPage: React.FC = () => {
     const handlePlatformSelect = (platformId: number | null) => {
         setSelectedPlatform(platformId);
         updateSearchParams({ platform: platformId?.toString() || null });
+        setAllGames([]);
         setShowPlatformMobile(false);
     };
 
